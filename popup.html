@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar Link Generator</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Calendar Link Generator</h1>
+
+    <div id="api-key-warning" class="warning hidden">
+      No API key configured. <a href="#" id="open-settings-link">Set it in Settings</a>.
+    </div>
+
+    <!-- Input Mode Toggle -->
+    <div class="mode-toggle">
+      <button id="mode-text-btn" class="mode-btn active" data-mode="text">Natural Language</button>
+      <button id="mode-picker-btn" class="mode-btn" data-mode="picker">Date Picker</button>
+    </div>
+
+    <!-- Natural Language Input -->
+    <div id="text-mode">
+      <label for="date-input">Date / Time</label>
+      <input type="text" id="date-input" placeholder='e.g. "next Tuesday at 3pm EST"' />
+    </div>
+
+    <!-- Date/Time Picker Input -->
+    <div id="picker-mode" class="hidden">
+      <label for="datetime-picker">Date & Time</label>
+      <input type="datetime-local" id="datetime-picker" />
+
+      <label for="duration-input">Duration (hours)</label>
+      <input type="number" id="duration-input" value="1" min="0.25" max="24" step="0.25" />
+
+      <label for="timezone-select">Timezone</label>
+      <select id="timezone-select">
+        <option value="Asia/Jerusalem">Asia/Jerusalem (IST)</option>
+        <option value="America/New_York">America/New_York (ET)</option>
+        <option value="America/Chicago">America/Chicago (CT)</option>
+        <option value="America/Denver">America/Denver (MT)</option>
+        <option value="America/Los_Angeles">America/Los_Angeles (PT)</option>
+        <option value="Europe/London">Europe/London (GMT/BST)</option>
+        <option value="Europe/Berlin">Europe/Berlin (CET)</option>
+        <option value="Europe/Paris">Europe/Paris (CET)</option>
+        <option value="Asia/Tokyo">Asia/Tokyo (JST)</option>
+        <option value="Asia/Kolkata">Asia/Kolkata (IST)</option>
+        <option value="Australia/Sydney">Australia/Sydney (AEST)</option>
+        <option value="Etc/UTC">UTC</option>
+      </select>
+    </div>
+
+    <!-- Event Name -->
+    <label for="event-name-input">Event Name (optional)</label>
+    <input type="text" id="event-name-input" placeholder='e.g. "Team standup"' />
+
+    <button id="generate-btn">Generate Link</button>
+
+    <div id="status-message" class="status hidden"></div>
+
+    <div id="result-area" class="hidden">
+      <a id="result-link" href="#" target="_blank" rel="noopener noreferrer">Open in Google Calendar</a>
+      <button id="copy-btn" class="secondary-btn">Copy Link</button>
+    </div>
+
+    <hr />
+    <button id="settings-btn" class="settings-btn">Settings</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

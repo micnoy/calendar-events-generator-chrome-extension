@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', init);
 let currentMode = 'text';
 
 async function init() {
-  const { openaiApiKey } = await chrome.storage.local.get('openaiApiKey');
-  if (!openaiApiKey) {
+  const { openaiApiKey: encryptedKey } = await chrome.storage.local.get('openaiApiKey');
+  if (!encryptedKey || !(await decryptValue(encryptedKey))) {
     document.getElementById('api-key-warning').classList.remove('hidden');
   }
 
@@ -66,7 +66,8 @@ async function handleGenerate() {
       return;
     }
 
-    const { openaiApiKey } = await chrome.storage.local.get('openaiApiKey');
+    const { openaiApiKey: encKey } = await chrome.storage.local.get('openaiApiKey');
+    const openaiApiKey = encKey ? await decryptValue(encKey) : null;
     if (!openaiApiKey) {
       showStatus('No API key found. Please configure it in Settings.', 'error');
       return;

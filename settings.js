@@ -12,7 +12,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   ]);
 
   if (settings.openaiApiKey) {
-    apiKeyInput.value = settings.openaiApiKey;
+    const decrypted = await decryptValue(settings.openaiApiKey);
+    if (decrypted) {
+      apiKeyInput.value = decrypted;
+    }
   }
   if (settings.openaiModel) {
     modelSelect.value = settings.openaiModel;
@@ -27,8 +30,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
+    const encryptedApiKey = await encryptValue(apiKey);
     await chrome.storage.local.set({
-      openaiApiKey: apiKey,
+      openaiApiKey: encryptedApiKey,
       openaiModel: modelSelect.value,
       defaultTimezone: defaultTzInput.value.trim() || 'Asia/Jerusalem',
     });

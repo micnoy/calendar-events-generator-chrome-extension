@@ -52,6 +52,7 @@ function switchMode(mode) {
 
 async function handleGenerate() {
   const eventName = document.getElementById('event-name-input').value.trim();
+  const location = document.getElementById('location-input').value.trim();
   const generateBtn = document.getElementById('generate-btn');
   const resultArea = document.getElementById('result-area');
 
@@ -114,7 +115,7 @@ async function handleGenerate() {
     };
   }
 
-  const calendarUrl = buildGoogleCalendarUrl(parsed, eventName);
+  const calendarUrl = buildGoogleCalendarUrl(parsed, eventName, location);
   const resultLink = document.getElementById('result-link');
   resultLink.href = calendarUrl;
   resultArea.classList.remove('hidden');
@@ -205,7 +206,7 @@ Rules:
   return parsed;
 }
 
-function buildGoogleCalendarUrl(parsed, eventName) {
+function buildGoogleCalendarUrl(parsed, eventName, location) {
   const params = new URLSearchParams();
   params.set('action', 'TEMPLATE');
   params.set('text', eventName || 'New Event');
@@ -213,6 +214,10 @@ function buildGoogleCalendarUrl(parsed, eventName) {
 
   if (!parsed.allDay) {
     params.set('ctz', parsed.timezone);
+  }
+
+  if (location) {
+    params.set('location', location);
   }
 
   return `https://calendar.google.com/calendar/render?${params.toString()}`;

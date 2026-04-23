@@ -1,0 +1,29 @@
+# Controls how GitHub auto-generates release notes for tagged releases.
+# PRs are grouped by label; the auto-labeler workflow (.github/workflows/label-pr.yml)
+# assigns labels based on the conventional-commit prefix of the PR title
+# (feat:, fix:, docs:, chore:, refactor:, deps:, perf:, ci:, test:).
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+    authors:
+      - dependabot
+  categories:
+    - title: 🚀 Features
+      labels:
+        - feature
+        - enhancement
+    - title: 🐛 Bug Fixes
+      labels:
+        - fix
+    - title: 📚 Documentation
+      labels:
+        - documentation
+    - title: 🧹 Chores & Refactors
+      labels:
+        - chore
+        - refactor
+        - dependencies
+    - title: Other Changes
+      labels:
+        - "*"

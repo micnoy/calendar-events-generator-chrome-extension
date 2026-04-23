@@ -1,0 +1,45 @@
+name: Auto-label PR
+
+# Reads the conventional-commit prefix from the PR title and applies a label.
+# The Release workflow then groups PRs by these labels in the auto-generated notes
+# (see .github/release.yml).
+#
+# Security: PR_TITLE is passed via env (never interpolated into the shell script),
+# so titles cannot execute arbitrary commands in the runner.
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Apply label from conventional-commit prefix
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          title_lower=$(printf '%s' "$PR_TITLE" | tr '[:upper:]' '[:lower:]')
+          case "$title_lower" in
+            feat:*|feat\(*\):*)           label="feature" ;;
+            fix:*|fix\(*\):*)             label="fix" ;;
+            docs:*|docs\(*\):*)           label="documentation" ;;
+            chore:*|chore\(*\):*)         label="chore" ;;
+            refactor:*|refactor\(*\):*)   label="refactor" ;;
+            deps:*|build:*|deps\(*\):*)   label="dependencies" ;;
+            perf:*|perf\(*\):*)           label="enhancement" ;;
+            ci:*|test:*)                  label="chore" ;;
+            *)                            label="" ;;
+          esac
+          if [ -n "$label" ]; then
+            echo "Applying label: $label"
+            gh pr edit "$PR_NUMBER" --repo "$REPO" --add-label "$label"
+          else
+            echo "PR title does not match a known conventional-commit prefix; no label applied."
+          fi

@@ -14,6 +14,7 @@
 
 - 🗣️ **Natural Language Input** — Type dates like "next Tuesday at 3pm EST" or "tomorrow at noon" and have them parsed by OpenAI
 - 📆 **Date/Time Picker** — Use a standard date picker with timezone selection (no API call needed)
+- 📍 **Location Support** — Optionally add a location that Google Calendar auto-parses (and geocodes if recognized)
 - 🔗 **Google Calendar Integration** — Generates and opens a pre-filled Google Calendar event link
 - ⚙️ **Configurable** — Choose your OpenAI model, default timezone, and store your API key locally
 - 🔒 **Encrypted Storage** — Your API key is encrypted at rest using AES-256-GCM
@@ -33,7 +34,8 @@
    - 🗣️ **Natural Language** — type a date/time description (e.g. "March 15 at 10am PST", "next Friday", "in 3 hours")
    - 📆 **Date Picker** — select a date, time, duration, and timezone
 3. Optionally enter an event/meeting name
-4. Click **Generate Link** — Google Calendar opens with the event pre-filled
+4. Optionally enter a location (address, venue, or a URL like a Zoom link)
+5. Click **Generate Link** — Google Calendar opens with the event pre-filled
 
 ## ⚙️ Settings
 

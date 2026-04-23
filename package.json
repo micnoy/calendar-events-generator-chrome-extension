@@ -1,0 +1,18 @@
+{
+  "name": "calendar-events-generator-chrome-extension",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Parse natural language dates with AI and generate Google Calendar event links.",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "check:manifest": "node -e \"JSON.parse(require('fs').readFileSync('manifest.json','utf8'))\"",
+    "check": "npm run check:manifest && npm run lint",
+    "zip": "node scripts/zip.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "eslint": "^9.18.0",
+    "globals": "^15.14.0"
+  }
+}
